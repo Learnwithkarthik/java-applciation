@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1120">
+  <title>GlobalShop — Thoughtfully picked essentials</title>
+  <meta name="description" content="Shop thoughtfully curated tech, workspace and lifestyle essentials at GlobalShop.">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/shop.js" defer></script>
+</head>
+<body>
+  <div class="announcement">✦ &nbsp; NEW SEASON EDIT <span class="ann-sep">·</span> Free delivery on orders above ₹4,999 <span class="ann-sep">·</span> Discover what feels different</div>
+  <header class="site-header">
+    <div class="wrap nav-bar">
+      <a class="brand" href="/" aria-label="GlobalShop home"><span class="brand-mark">G<span class="mark-dot">.</span></span><span>global<span class="brand-light">shop</span></span></a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#collection">Shop all</a><a href="#why-us">Our story</a><button class="link-btn" id="track-nav" type="button">Track order</button>
+      </nav>
+      <div class="nav-actions">
+        <span class="nav-mini">Made for everyday living.</span>
+        <button class="cart-action" id="open-cart" type="button" aria-label="Open shopping cart"><span>Bag</span><span class="cart-count" id="cart-count">0</span></button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="wrap hero-wrap">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> INTRODUCING THE EVERYDAY EDIT <span class="hero-sparkle">✳</span></div>
+          <h1>Better things.<br><em>Better days.</em></h1>
+          <p>Fresh perspectives on the objects we use most. Smart design, effortless function, and a little joy in every detail.</p>
+          <div class="hero-buttons"><a class="btn btn-dark" href="#collection">Explore the collection <span>↗</span></a><span class="hero-note"><span class="tiny-star">✴</span> Curated with care</span></div>
+          <div class="hero-stats"><span><strong>12</strong> curated essentials</span><span class="stat-sep"></span><span><strong>6</strong> categories to explore</span></div>
+        </div>
+        <div class="hero-art" aria-label="Featured products illustration" role="img">
+          <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+          <div class="float-tag tag-top"><span class="tag-dot"></span> THE 2026 EDIT</div>
+          <div class="showcase-disc"><div class="showcase-emoji">🎧</div></div>
+          <div class="hero-micro micro-left">DESIGN THAT<br>FEELS RIGHT.</div>
+          <div class="float-tag tag-bottom">01 / EVERYDAY AUDIO <span>↗</span></div>
+          <div class="hero-star star-one">✳</div><div class="hero-star star-two">✦</div>
+        </div>
+      </div>
+    </section>
+    <section class="values-strip" aria-label="Store benefits"><div class="wrap values-grid"><span>✳ &nbsp; Considered quality</span><span>◇ &nbsp; Everyday essentials</span><span>↗ &nbsp; Effortless shopping</span><span>✦ &nbsp; Little things, big difference</span></div></section>
+    <section class="products-section wrap" id="collection">
+      <div class="section-heading"><div><div class="section-kicker">THE EDIT / 001</div><h2>Find your <em>new favorite.</em></h2><p>Good finds for every part of your day.</p></div><div class="collection-side"><span class="round-spark">✳</span><span>EDITED WITH INTENTION<br>MADE FOR YOU</span></div></div>
+      <div class="browse-controls"><div class="category-filters" id="categories" role="group" aria-label="Product category filter"><button class="filter active" data-category="">Everything</button></div><label class="search-field"><span>⌕</span><input id="search-input" type="search" placeholder="Search the collection..." autocomplete="off" aria-label="Search products"></label></div>
+      <div class="results-bar"><span id="results-label">Loading the collection...</span><span>SORTED / THE EDIT</span></div>
+      <div class="product-grid" id="product-grid"><div class="loading-card">Getting your collection ready…</div></div>
+      <div class="center-note"><span class="line-sep"></span> CURATED, NOT CROWDED <span class="line-sep"></span></div>
+    </section>
+    <section class="story-section" id="why-us"><div class="wrap story-grid"><div class="story-symbol"><div class="story-blob">✽</div><span>GOOD DESIGN.<br>GOOD COMPANY.</span></div><div class="story-copy"><div class="section-kicker">THE WHY BEHIND THE WHAT</div><h2>It's the little things<br>that make a <em>big difference.</em></h2><p>At GlobalShop, we believe the everyday should feel extraordinary. We bring together useful, beautiful products you can feel good about owning.</p><a href="#collection" class="text-cta">See what’s in store <span>↗</span></a></div></div></section>
+  </main>
+  <footer class="footer"><div class="wrap footer-content"><div><a href="/" class="brand footer-brand"><span class="brand-mark">G<span class="mark-dot">.</span></span><span>global<span class="brand-light">shop</span></span></a><p>Objects for a life well lived.<br>Thoughtfully chosen, endlessly enjoyed.</p></div><div class="footer-right"><span>EXPLORE</span><a href="#collection">Our collection</a><button type="button" class="link-btn" id="track-footer">Track your order</button><a href="/admin.html">Team dashboard ↗</a></div></div><div class="wrap footer-bottom">© <span id="year"></span> GLOBALSHOP. A DEMO COMMERCE EXPERIENCE. <span>BUILT FOR THE DETAILS ✳</span></div></footer>
+  <div class="overlay" id="overlay" hidden></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Your shopping bag" aria-hidden="true">
+    <div class="drawer-head"><div><div class="section-kicker">YOUR SELECTION</div><h3>The bag <span id="bag-items-count">(0)</span></h3></div><button type="button" class="icon-close" id="close-cart" aria-label="Close cart">×</button></div>
+    <div id="cart-items" class="drawer-items"></div>
+    <div class="drawer-bottom"><div class="subtotal-line"><span>Subtotal</span><strong id="cart-total">₹0</strong></div><div class="shipping-hint" id="shipping-hint">Shipping calculated at checkout · Demo COD only</div><button class="btn btn-dark btn-wide" id="checkout-button" type="button">Continue to checkout <span>↗</span></button></div>
+  </aside>
+  <section class="modal" id="checkout-modal" role="dialog" aria-modal="true" aria-label="Checkout" aria-hidden="true"><div class="modal-header"><div><div class="section-kicker">ALMOST THERE</div><h3>Finish your order.</h3></div><button class="icon-close" id="close-checkout" aria-label="Close checkout">×</button></div><form id="checkout-form"><label>FULL NAME <input name="customerName" required maxlength="100" placeholder="Alex Morgan" autocomplete="name"></label><label>EMAIL ADDRESS <input name="customerEmail" type="email" required maxlength="254" placeholder="alex@example.com" autocomplete="email"></label><label>DELIVERY ADDRESS <textarea name="shippingAddress" required minlength="10" maxlength="350" rows="3" placeholder="Flat, building, street, city, state and ZIP code" autocomplete="street-address"></textarea></label><p class="secure-note">◈ &nbsp; Practice checkout · Cash on delivery only. No real payments or shipments.</p><div class="checkout-total"><span>Order total</span><strong id="checkout-total">₹0</strong></div><button type="submit" class="btn btn-dark btn-wide" id="place-order">Place demo order <span>↗</span></button></form><div class="order-success" id="order-success" hidden><div class="success-icon">✓</div><h3>It's on its way.<br><em>Well, almost.</em></h3><p>Your practice order has been saved. Keep this order number for tracking.</p><div class="order-number" id="success-order-number"></div><p class="muted">No payment has been taken; this is a training application.</p><button type="button" class="btn btn-dark btn-wide" id="success-done">Continue exploring</button></div></section>
+  <section class="modal" id="track-modal" role="dialog" aria-modal="true" aria-label="Track order" aria-hidden="true"><div class="modal-header"><div><div class="section-kicker">ORDER STATUS</div><h3>Where's my order?</h3></div><button class="icon-close" id="close-track" aria-label="Close tracker">×</button></div><form id="track-form"><label>ORDER NUMBER <input name="number" required placeholder="GS-XXXXXXXX"></label><label>EMAIL USED AT CHECKOUT <input name="email" type="email" required placeholder="alex@example.com"></label><button class="btn btn-dark btn-wide" type="submit">Find my order <span>↗</span></button></form><div id="track-result"></div></section>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
