@@ -22,6 +22,7 @@ jobs:
         run: mvn clean package
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
       - name: Upload JAR to Nexus
+        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
         env:
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
