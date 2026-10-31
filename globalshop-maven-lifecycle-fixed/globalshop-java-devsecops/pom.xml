@@ -1,95 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- Spring Boot Parent -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>4.1.2</version>
         <relativePath/>
     </parent>
+
+    <!-- Application Information -->
     <groupId>com.globalshop</groupId>
     <artifactId>globalshop</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+
     <name>GlobalShop</name>
-    <description>Retail order &amp; inventory management application — DevSecOps training project</description>
+
+    <description>
+        Retail order &amp; inventory management application
+        - DevSecOps training project
+    </description>
+
+    <!-- Java and SonarQube Properties -->
     <properties>
         <java.version>21</java.version>
+
         <sonar.projectKey>globalshop-java</sonar.projectKey>
         <sonar.projectName>GlobalShop Java</sonar.projectName>
-        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+
+        <sonar.coverage.jacoco.xmlReportPaths>
+            target/site/jacoco/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
     </properties>
+
+    <!-- Application Dependencies -->
     <dependencies>
+
+        <!-- REST APIs -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
+
+        <!-- Database / JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!-- Input Validation -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+
+        <!-- Health and Monitoring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
+        <!-- PostgreSQL -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- H2 Database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
+
+    <!-- Maven Build Plugins -->
     <build>
         <plugins>
+
+            <!-- Generate Spring Boot JAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!-- JaCoCo Code Coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.14</version>
+
                 <executions>
-                    <execution><goals><goal>prepare-agent</goal></goals></execution>
-                    <execution><id>report</id><phase>verify</phase><goals><goal>report</goal></goals></execution>
+
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+
                 </executions>
             </plugin>
+
         </plugins>
     </build>
-    <!-- Set NEXUS_URL to e.g. http://localhost:8081 (or your CI URL) to publish. -->
+
+    <!-- Nexus Artifact Repository Configuration -->
     <profiles>
         <profile>
             <id>nexus-deploy</id>
-            <activation><property><name>nexusUrl</name></property></activation>
+
+            <activation>
+                <property>
+                    <name>nexusUrl</name>
+                </property>
+            </activation>
+
             <distributionManagement>
+
+                <!-- Release Repository -->
                 <repository>
                     <id>nexus-releases</id>
                     <url>${nexusUrl}/repository/maven-releases/</url>
                 </repository>
+
+                <!-- Snapshot Repository -->
                 <snapshotRepository>
                     <id>nexus-snapshots</id>
                     <url>${nexusUrl}/repository/maven-snapshots/</url>
                 </snapshotRepository>
+
             </distributionManagement>
+
         </profile>
     </profiles>
+
 </project>
