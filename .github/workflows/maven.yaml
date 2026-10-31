@@ -21,3 +21,4 @@ jobs:
 
       - name: Build Application
         run: mvn clean package
+        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
