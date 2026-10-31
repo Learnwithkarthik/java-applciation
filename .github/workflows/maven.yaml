@@ -18,7 +18,22 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+          server-id: nexus-snapshots
+          server-username: NEXUS_USERNAME
+          server-password: NEXUS_PASSWORD
 
       - name: Build Application
         run: mvn clean package
+        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+
+      - name: Test Nexus Authentication and Deploy
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          NEXUS_URL: ${{ vars.NEXUS_URL }}
+        run: |
+          mvn deploy \
+            -DskipTests \
+            -Pnexus-deploy \
+            -DnexusUrl=$NEXUS_URL
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
