@@ -16,7 +16,7 @@
     <description>Retail order &amp; inventory management application — DevSecOps training project</description>
     <properties>
         <java.version>21</java.version>
-        <sonar.projectKey>globalshop-java</sonar.projectKey>
+        <sonar.projectKey>globalShop-java</sonar.projectKey>
         <sonar.projectName>GlobalShop Java</sonar.projectName>
         <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
