@@ -50,6 +50,6 @@ jobs:
           mvn -B -ntp \
             org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar \
             -Dsonar.host.url="$SONAR_HOST_URL" \
-            -Dsonar.projectKey=globalShop-java \
+            -Dsonar.projectKey=globalShop-Java \
             -Dsonar.qualitygate.wait=true
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
