@@ -30,7 +30,7 @@
     <properties>
         <java.version>21</java.version>
 
-        <sonar.projectKey>globalshop-java</sonar.projectKey>
+        <sonar.projectKey>globalShop-Java</sonar.projectKey>
         <sonar.projectName>GlobalShop Java</sonar.projectName>
 
         <sonar.coverage.jacoco.xmlReportPaths>
