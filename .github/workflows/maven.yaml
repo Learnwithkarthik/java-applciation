@@ -30,26 +30,16 @@ jobs:
         run: mvn clean package
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
 
-      # - name: Test Nexus Authentication and Deploy
-      #   env:
-      #     NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-      #     NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-      #     NEXUS_URL: ${{ vars.NEXUS_URL }}
-      #   run: |
-      #     mvn deploy \
-      #       -DskipTests \
-      #       -Pnexus-deploy \
-      #       -DnexusUrl=$NEXUS_URL
-      #   working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
-
-      - name: SonarQube Analysis
+      - name: Test Nexus Authentication and Deploy
         env:
-          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          NEXUS_URL: ${{ vars.NEXUS_URL }}
         run: |
-          mvn -B -ntp \
-            org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar \
-            -Dsonar.host.url="$SONAR_HOST_URL" \
-            -Dsonar.projectKey=globalShop-Java \
-            -Dsonar.qualitygate.wait=true
+          mvn deploy \
+            -DskipTests \
+            -Pnexus-deploy \
+            -DnexusUrl=$NEXUS_URL
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+
+ 
