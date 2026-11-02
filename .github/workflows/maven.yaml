@@ -22,6 +22,10 @@ jobs:
           server-username: NEXUS_USERNAME
           server-password: NEXUS_PASSWORD
 
+      - name: Maven Build and Tests
+        run: mvn -B -ntp clean verify
+        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+
       - name: Build Application
         run: mvn clean package
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
@@ -36,4 +40,16 @@ jobs:
             -DskipTests \
             -Pnexus-deploy \
             -DnexusUrl=$NEXUS_URL
+        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+
+      - name: SonarQube Analysis
+        env:
+          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B -ntp \
+            org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar \
+            -Dsonar.host.url="$SONAR_HOST_URL" \
+            -Dsonar.projectKey=globalshop-java \
+            -Dsonar.qualitygate.wait=true
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
