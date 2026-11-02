@@ -1,4 +1,4 @@
-name: Maven Build
+name: Semgrep Security Scan
 
 on:
   push:
@@ -6,40 +6,31 @@ on:
       - main
 
 jobs:
-  maven-build:
+  semgrep-scan:
     runs-on: ubuntu-latest
+
+    container:
+      image: semgrep/semgrep:latest
+
+    defaults:
+      run:
+        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Java 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '21'
-          server-id: nexus-snapshots
-          server-username: NEXUS_USERNAME
-          server-password: NEXUS_PASSWORD
-
-      - name: Maven Build and Tests
-        run: mvn -B -ntp clean verify
-        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
-
-      - name: Build Application
-        run: mvn clean package
-        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
-
-      - name: Test Nexus Authentication and Deploy
-        env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-          NEXUS_URL: ${{ vars.NEXUS_URL }}
+      - name: Semgrep Community Scan
         run: |
-          mvn deploy \
-            -DskipTests \
-            -Pnexus-deploy \
-            -DnexusUrl=$NEXUS_URL
-        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+          semgrep scan \
+            --config auto \
+            --metrics=off \
+            src/main/java
 
- 
+      - name: GlobalShop Security Policy Scan
+        run: |
+          semgrep scan \
+            --config .semgrep/globalshop-rules.yml \
+            --metrics=off \
+            --error \
+            src/main/java
