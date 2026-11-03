@@ -1,39 +1,47 @@
 name: Maven Build
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
 jobs:
-maven-build:
-runs-on: ubuntu-latest
+  maven-build:
+    runs-on: ubuntu-latest
 
-steps:
-- name: Checkout Code
-uses: actions/checkout@v4
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-- name: Setup Java 21
-uses: actions/setup-java@v4
-with:
-distribution: temurin
-java-version: '21'
-          server-id: nexus-snapshots
-          server-username: NEXUS_USERNAME
-          server-password: NEXUS_PASSWORD
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
 
-- name: Build Application
-run: mvn clean package
-working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
-
-      - name: Test Nexus Authentication and Deploy
-        env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-          NEXUS_URL: ${{ vars.NEXUS_URL }}
+      - name: Verify Java
         run: |
-          mvn deploy \
-            -DskipTests \
-            -Pnexus-deploy \
-            -DnexusUrl=$NEXUS_URL
+          java -version
+          javac -version
+          mvn -version
+
+      - name: Build Application
+        run: mvn clean package
+        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+
+      - name: Maven Test
+        run: mvn -B -ntp clean verify
+        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+
+      - name: SonarQube Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          mvn -B -ntp clean verify
+          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=GlobalShop-Java \
+            -Dsonar.projectName="GlobalShop Java" \
+            -Dsonar.host.url=${SONAR_HOST_URL} \
+            -Dsonar.token=${SONAR_TOKEN}
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
