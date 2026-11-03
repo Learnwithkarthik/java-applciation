@@ -43,5 +43,5 @@ jobs:
             -Dsonar.projectKey=GlobalShop-Java \
             -Dsonar.projectName="GlobalShop Java" \
             -Dsonar.host.url=${{ vars.SONAR_HOST_URL }} \
-            -Dsonar.token=${secrets.SONAR_TOKEN}
+            -Dsonar.token=${SONAR_TOKEN}
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
