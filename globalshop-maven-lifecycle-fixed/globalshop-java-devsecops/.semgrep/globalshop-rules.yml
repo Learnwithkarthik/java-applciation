@@ -1,0 +1,8 @@
+
+rules:
+  - id: globalshop-insecure-md5
+    languages:
+      - java
+    severity: ERROR
+    message: "MD5 is insecure for security-sensitive hashing. Review and use a suitable modern algorithm."
+    pattern: MessageDigest.getInstance("MD5")
