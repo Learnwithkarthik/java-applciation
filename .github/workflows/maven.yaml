@@ -42,6 +42,6 @@ jobs:
           mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
             -Dsonar.projectKey=GlobalShop-Java \
             -Dsonar.projectName="GlobalShop Java" \
-            -Dsonar.host.url=${SONAR_HOST_URL} \
+            -Dsonar.host.url=https://6ae97b6a154749dc910414e1-4bc54f.node-ap-c7ae.iximiuz.com \
             -Dsonar.token=${SONAR_TOKEN}
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
