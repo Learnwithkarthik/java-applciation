@@ -29,3 +29,7 @@ jobs:
       - name: Semgrep Security Scan
         run: semgrep scan --config p/java --metrics=off --error src/main/java
         working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+      - name: Run Fossa scan
+        uses: fossas/fossa-action@main
+        with:
+          api-key: a5f26aa313ab8e86a93df76aced9a6b2
