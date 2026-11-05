@@ -28,3 +28,4 @@ jobs:
 
       - name: Semgrep Security Scan
         run: semgrep scan --config p/java --metrics=off --error src/main/java
+        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
