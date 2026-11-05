@@ -1,4 +1,4 @@
-name: Maven Build
+name: semgreptest
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  maven-build:
+  build-scan:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,29 +19,11 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Verify Java
-        run: |
-          java -version
-          javac -version
-          mvn -version
+      - name: Maven Build and Test
+        run: mvn -B verify
 
-      - name: Build Application
-        run: mvn clean package
-        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+      - name: Install Semgrep
+        run: pip install semgrep
 
-      - name: Maven Test
-        run: mvn -B -ntp clean verify
-        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
-
-      - name: SonarQube Analysis
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
-        run: |
-          mvn -B -ntp clean verify
-          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=GlobalShop-Java \
-            -Dsonar.projectName="GlobalShop Java" \
-            -Dsonar.host.url=${{ vars.SONAR_HOST_URL }} \
-            -Dsonar.token=${SONAR_TOKEN}
-        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+      - name: Semgrep Security Scan
+        run: semgrep scan --config p/java --metrics=off --error src/main/java
