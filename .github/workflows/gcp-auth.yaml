@@ -44,10 +44,9 @@ jobs:
 
       - name: Build Docker Image
         working-directory: ./globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
-
         run: |
           docker build \
-            -t us-central1-docker.pkg.dev/project-08394b4a-cbcc-4585-bd5/docker-sample/myapp:latest \
+            -t us-central1-docker.pkg.dev/project-08394b4a-cbcc-4585-bd5/docker-sample/myapp:latest 
             
       - name: Push Docker Image
         run: |
