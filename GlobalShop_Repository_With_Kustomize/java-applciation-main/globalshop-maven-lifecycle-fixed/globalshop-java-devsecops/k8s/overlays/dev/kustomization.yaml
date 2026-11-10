@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+namespace: globalshop-dev
+
+labels:
+  - pairs:
+      environment: dev
+    includeTemplates: true
+
+replicas:
+  - name: globalshop-app
+    count: 1
+
+configMapGenerator:
+  - name: globalshop-config
+    behavior: merge
+    literals:
+      - APP_ENV=dev
+
+patches:
+  - path: app-resources.yaml

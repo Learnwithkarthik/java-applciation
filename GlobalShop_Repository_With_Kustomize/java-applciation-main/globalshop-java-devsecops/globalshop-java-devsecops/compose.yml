@@ -1,0 +1,32 @@
+name: globalshop
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: globalshop
+      POSTGRES_USER: globalshop
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-training-local-password}
+    volumes:
+      - globalshop-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U globalshop -d globalshop"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/globalshop
+      DB_USER: globalshop
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-training-local-password}
+      ADMIN_API_KEY: ${ADMIN_API_KEY:-dev-only-change-me}
+      SEED_DEMO_DATA: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  globalshop-db:

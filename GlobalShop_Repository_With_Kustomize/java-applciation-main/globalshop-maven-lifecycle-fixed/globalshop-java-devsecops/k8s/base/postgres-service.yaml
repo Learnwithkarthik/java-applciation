@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: globalshop-postgres
+  labels:
+    app.kubernetes.io/name: globalshop
+    app.kubernetes.io/component: database
+spec:
+  clusterIP: None
+  selector:
+    app.kubernetes.io/name: globalshop
+    app.kubernetes.io/component: database
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres
