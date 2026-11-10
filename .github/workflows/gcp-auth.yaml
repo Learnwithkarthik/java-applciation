@@ -33,21 +33,7 @@ jobs:
           gcloud config get-value project
           gcloud auth print-access-token > /dev/null
           echo "GCP authentication successful"
-       - name: Docker verification
-         run: |
-             docker --version
 
-      # - name: Configure Docker
-      #   run: |
-      #     gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
-
-      # - name: Build Docker Image
-      #   run: |
-      #     docker build \
-      #       -t us-central1-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/docker-sample/globalshop-java:latest \
-      #       ./globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
-
-      - name: Push Docker Image
+      - name: Docker Verification
         run: |
-          docker push \
-            us-central1-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/docker-sample/globalshop-java:latest
+          docker --version
