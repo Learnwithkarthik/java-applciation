@@ -39,8 +39,8 @@ jobs:
           docker --version
       - name: Build Docker image
         run: |
-           docker build -t myapp:latest 
-        working-directory: globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+           docker build -t us-central1-docker.pkg.dev/project-08394b4a-cbcc-4585-bd5/docker-sample/myapp:latest \
+            ./globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
       - name: Docker push 
         run: |
            docker push  us-central1-docker.pkg.dev/project-08394b4a-cbcc-4585-bd5/docker-sample/myapp:latest
