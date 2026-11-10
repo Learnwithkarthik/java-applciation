@@ -36,4 +36,4 @@ jobs:
 
       - name: Docker Verification
         run: |
-          docker --version
+          terraform --version
