@@ -47,6 +47,9 @@ jobs:
         run: |
           docker build -t myapp:latest \
           ./globalshop-maven-lifecycle-fixed/globalshop-java-devsecops
+      - name: Docker tagging
+        run: |
+           docker tag myapp:latest us-central1-docker.pkg.dev/project-08394b4a-cbcc-4585-bd5/docker-sample myapp:latest
             
       - name: Push Docker Image
         run: |
