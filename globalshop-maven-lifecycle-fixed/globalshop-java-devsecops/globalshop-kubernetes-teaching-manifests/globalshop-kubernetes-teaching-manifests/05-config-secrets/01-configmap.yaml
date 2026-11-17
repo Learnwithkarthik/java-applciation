@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: globalshop-config
+  namespace: globalshop
+data:
+  PORT: "8080"
+  SEED_DEMO_DATA: "true"
+  LOGGING_LEVEL_COM_GLOBALSHOP: INFO

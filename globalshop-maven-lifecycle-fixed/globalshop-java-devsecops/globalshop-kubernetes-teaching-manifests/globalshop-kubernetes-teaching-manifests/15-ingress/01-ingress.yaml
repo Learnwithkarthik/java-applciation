@@ -1,0 +1,20 @@
+# Requires an Ingress controller whose IngressClass is named "nginx".
+# The Kubernetes Ingress API is stable but frozen; Gateway API is preferred for new designs.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: globalshop
+  namespace: globalshop
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: globalshop.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: globalshop-service
+                port:
+                  number: 8080

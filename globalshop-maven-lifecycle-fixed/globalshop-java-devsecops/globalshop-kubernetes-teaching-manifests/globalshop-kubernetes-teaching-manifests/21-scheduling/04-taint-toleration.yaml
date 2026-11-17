@@ -1,0 +1,16 @@
+# Example setup command:
+# kubectl taint node node-01 dedicated=training:NoSchedule
+apiVersion: v1
+kind: Pod
+metadata:
+  name: globalshop-toleration
+  namespace: globalshop
+spec:
+  tolerations:
+    - key: dedicated
+      operator: Equal
+      value: training
+      effect: NoSchedule
+  containers:
+    - name: globalshop
+      image: karthikeya91101/myapp:v2

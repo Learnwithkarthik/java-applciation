@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop-netpol
+  namespace: globalshop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: globalshop-netpol
+  template:
+    metadata:
+      labels:
+        app: globalshop-netpol
+    spec:
+      containers:
+        - name: globalshop
+          image: karthikeya91101/myapp:v2
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: globalshop-netpol
+  namespace: globalshop
+spec:
+  selector:
+    app: globalshop-netpol
+  ports:
+    - port: 8080
+      targetPort: 8080

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: allowed-client
+  namespace: globalshop
+  labels:
+    role: client
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl:8.12.1
+      command: ["sh", "-c", "sleep 3600"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: blocked-client
+  namespace: globalshop
+  labels:
+    role: blocked
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl:8.12.1
+      command: ["sh", "-c", "sleep 3600"]

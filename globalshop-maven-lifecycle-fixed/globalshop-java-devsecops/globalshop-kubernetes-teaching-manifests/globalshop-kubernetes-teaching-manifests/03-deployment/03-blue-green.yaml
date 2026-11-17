@@ -1,0 +1,63 @@
+# Blue/Green demo: Service initially points to BLUE.
+# Both lanes use the same known-good image by default; replace BLUE with an older tag if you want a visible version difference.
+# Change service.spec.selector.slot from blue to green to switch traffic.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop-blue
+  namespace: globalshop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: globalshop
+      slot: blue
+  template:
+    metadata:
+      labels:
+        app: globalshop
+        slot: blue
+        version: v1
+    spec:
+      containers:
+        - name: globalshop
+          image: karthikeya91101/myapp:v2
+          ports:
+            - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop-green
+  namespace: globalshop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: globalshop
+      slot: green
+  template:
+    metadata:
+      labels:
+        app: globalshop
+        slot: green
+        version: v2
+    spec:
+      containers:
+        - name: globalshop
+          image: karthikeya91101/myapp:v2
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: globalshop-bluegreen
+  namespace: globalshop
+spec:
+  selector:
+    app: globalshop
+    slot: blue
+  ports:
+    - port: 8080
+      targetPort: 8080

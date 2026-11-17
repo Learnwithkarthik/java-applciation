@@ -1,0 +1,11 @@
+# No selector: Kubernetes will NOT automatically generate endpoints for this Service.
+apiVersion: v1
+kind: Service
+metadata:
+  name: manual-backend
+  namespace: globalshop
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

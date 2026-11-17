@@ -1,0 +1,13 @@
+# First label a worker, for example:
+# kubectl label node node-01 training=true
+apiVersion: v1
+kind: Pod
+metadata:
+  name: globalshop-node-selector
+  namespace: globalshop
+spec:
+  nodeSelector:
+    training: "true"
+  containers:
+    - name: globalshop
+      image: karthikeya91101/myapp:v2

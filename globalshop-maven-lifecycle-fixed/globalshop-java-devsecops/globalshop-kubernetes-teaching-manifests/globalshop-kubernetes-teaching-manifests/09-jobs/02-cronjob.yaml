@@ -1,0 +1,22 @@
+# Runs every 2 minutes for a visible classroom demo.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: globalshop-health-check
+  namespace: globalshop
+spec:
+  schedule: "*/2 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: curl
+              image: curlimages/curl:8.12.1
+              args:
+                - -fsS
+                - http://globalshop-service:8080/actuator/health

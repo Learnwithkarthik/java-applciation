@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop-recreate
+  namespace: globalshop
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: globalshop-recreate
+  template:
+    metadata:
+      labels:
+        app: globalshop-recreate
+    spec:
+      containers:
+        - name: globalshop
+          image: karthikeya91101/myapp:v2
+          ports:
+            - containerPort: 8080

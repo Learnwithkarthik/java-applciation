@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop-hpa
+  namespace: globalshop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: globalshop-hpa
+  template:
+    metadata:
+      labels:
+        app: globalshop-hpa
+    spec:
+      containers:
+        - name: globalshop
+          image: karthikeya91101/myapp:v2
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi

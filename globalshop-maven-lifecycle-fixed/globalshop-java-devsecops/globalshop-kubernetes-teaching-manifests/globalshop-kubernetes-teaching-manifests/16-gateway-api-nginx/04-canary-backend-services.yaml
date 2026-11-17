@@ -1,0 +1,26 @@
+# Apply after 03-deployment/04-canary.yaml.
+apiVersion: v1
+kind: Service
+metadata:
+  name: globalshop-v1
+  namespace: globalshop
+spec:
+  selector:
+    app: globalshop-canary
+    track: stable
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: globalshop-v2
+  namespace: globalshop
+spec:
+  selector:
+    app: globalshop-canary
+    track: canary
+  ports:
+    - port: 8080
+      targetPort: 8080

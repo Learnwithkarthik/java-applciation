@@ -1,0 +1,42 @@
+# DaemonSet is best demonstrated with a node-level agent rather than the web app.
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-info-agent
+  namespace: globalshop
+spec:
+  selector:
+    matchLabels:
+      app: node-info-agent
+  template:
+    metadata:
+      labels:
+        app: node-info-agent
+    spec:
+      containers:
+        - name: agent
+          image: busybox:1.37
+          command:
+            - sh
+            - -c
+            - |
+              while true; do
+                echo "node=$NODE_NAME pod=$POD_NAME time=$(date)"
+                sleep 30
+              done
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 50m
+              memory: 32Mi

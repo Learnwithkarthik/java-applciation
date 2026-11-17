@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop-available
+  namespace: globalshop
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: globalshop-available
+  template:
+    metadata:
+      labels:
+        app: globalshop-available
+    spec:
+      priorityClassName: globalshop-high
+      containers:
+        - name: globalshop
+          image: karthikeya91101/myapp:v2
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi

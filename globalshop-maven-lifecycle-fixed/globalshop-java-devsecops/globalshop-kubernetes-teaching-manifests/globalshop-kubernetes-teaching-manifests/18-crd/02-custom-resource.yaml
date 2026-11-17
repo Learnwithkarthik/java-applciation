@@ -1,0 +1,9 @@
+apiVersion: training.skillops.io/v1alpha1
+kind: TrainingApp
+metadata:
+  name: globalshop
+  namespace: globalshop
+spec:
+  image: karthikeya91101/myapp:v2
+  replicas: 3
+  owner: kubernetes-students

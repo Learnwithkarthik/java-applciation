@@ -1,0 +1,17 @@
+# Replace __BACKEND_POD_IP__ with the Pod IP from:
+# kubectl get pod endpoint-backend -n globalshop -o wide
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: manual-backend-1
+  namespace: globalshop
+  labels:
+    kubernetes.io/service-name: manual-backend
+addressType: IPv4
+ports:
+  - name: http
+    protocol: TCP
+    port: 80
+endpoints:
+  - addresses:
+      - __BACKEND_POD_IP__

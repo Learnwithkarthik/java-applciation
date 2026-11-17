@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: globalshop-node-affinity
+  namespace: globalshop
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: training
+                operator: In
+                values: ["true"]
+  containers:
+    - name: globalshop
+      image: karthikeya91101/myapp:v2

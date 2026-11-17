@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop-anti-affinity
+  namespace: globalshop
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: globalshop-anti-affinity
+  template:
+    metadata:
+      labels:
+        app: globalshop-anti-affinity
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: globalshop-anti-affinity
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: globalshop
+          image: karthikeya91101/myapp:v2

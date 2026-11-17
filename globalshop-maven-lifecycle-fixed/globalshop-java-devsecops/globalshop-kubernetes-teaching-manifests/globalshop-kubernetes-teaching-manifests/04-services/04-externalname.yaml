@@ -1,0 +1,9 @@
+# ExternalName provides a Kubernetes DNS alias for an external DNS name.
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-database
+  namespace: globalshop
+spec:
+  type: ExternalName
+  externalName: database.example.com

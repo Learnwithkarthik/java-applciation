@@ -1,0 +1,31 @@
+# Single replica because H2 file storage should not be shared by multiple app replicas.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop-persistent-h2
+  namespace: globalshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: globalshop-persistent-h2
+  template:
+    metadata:
+      labels:
+        app: globalshop-persistent-h2
+    spec:
+      containers:
+        - name: globalshop
+          image: karthikeya91101/myapp:v2
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              value: jdbc:h2:file:/opt/app/data/globalshop;DB_CLOSE_ON_EXIT=FALSE
+          volumeMounts:
+            - name: app-data
+              mountPath: /opt/app/data
+      volumes:
+        - name: app-data
+          persistentVolumeClaim:
+            claimName: globalshop-data

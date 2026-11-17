@@ -1,0 +1,16 @@
+# STATIC POD EXAMPLE — DO NOT RUN `kubectl apply -f`.
+# On a disposable kubeadm control-plane node, placing this file under
+# /etc/kubernetes/manifests/ makes the kubelet create the Pod directly.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: static-nginx-demo
+  namespace: default
+  labels:
+    lesson: static-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.27-alpine
+      ports:
+        - containerPort: 80

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop-config-demo
+  namespace: globalshop
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: globalshop-config-demo
+  template:
+    metadata:
+      labels:
+        app: globalshop-config-demo
+    spec:
+      containers:
+        - name: globalshop
+          image: karthikeya91101/myapp:v2
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: globalshop-config
+            - secretRef:
+                name: globalshop-secret

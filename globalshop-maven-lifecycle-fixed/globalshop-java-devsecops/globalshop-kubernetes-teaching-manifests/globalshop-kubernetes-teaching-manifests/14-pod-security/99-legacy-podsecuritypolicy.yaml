@@ -1,0 +1,24 @@
+# HISTORICAL EXAMPLE ONLY.
+# PodSecurityPolicy was removed from Kubernetes v1.25 and this manifest will fail on modern clusters.
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: legacy-restricted
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  runAsUser:
+    rule: MustRunAsNonRoot
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  fsGroup:
+    rule: RunAsAny
+  volumes:
+    - configMap
+    - emptyDir
+    - persistentVolumeClaim
+    - secret

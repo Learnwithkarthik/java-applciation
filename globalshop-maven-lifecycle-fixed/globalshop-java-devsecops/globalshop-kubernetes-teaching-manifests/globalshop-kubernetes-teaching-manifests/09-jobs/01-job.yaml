@@ -1,0 +1,20 @@
+# Requires globalshop-service to exist.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: globalshop-health-check
+  namespace: globalshop
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        job: globalshop-health-check
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: curl
+          image: curlimages/curl:8.12.1
+          args:
+            - -fsS
+            - http://globalshop-service:8080/actuator/health
