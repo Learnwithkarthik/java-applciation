@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: globalshop
+  datasource:
+    url: ${DB_URL:jdbc:h2:file:./data/globalshop;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${DB_USER:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update # LAB ONLY: use Flyway/Liquibase migrations in production
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+app:
+  admin-key: ${ADMIN_API_KEY:dev-only-change-me}
+  seed-demo-data: ${SEED_DEMO_DATA:true}
+logging:
+  level:
+    com.globalshop: INFO

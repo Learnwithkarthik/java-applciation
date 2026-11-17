@@ -1,0 +1,183 @@
+{
+  "info": {
+    "name": "GlobalShop Retail APIs \u2014 DevSecOps Lab",
+    "description": "Import this collection into Postman. Edit variables baseUrl, adminKey, orderNumber. Never use real customer PII.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "adminKey",
+      "value": "dev-only-change-me"
+    },
+    {
+      "key": "orderNumber",
+      "value": "GS-REPLACE-ME"
+    },
+    {
+      "key": "customerEmail",
+      "value": "demo@example.com"
+    }
+  ],
+  "item": [
+    {
+      "name": "Customer / Public APIs",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/actuator/health"
+          }
+        },
+        {
+          "name": "All products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products"
+          }
+        },
+        {
+          "name": "Audio products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?category=Audio"
+          }
+        },
+        {
+          "name": "Search products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products?search=wireless"
+          }
+        },
+        {
+          "name": "Product details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/products/1"
+          }
+        },
+        {
+          "name": "Place demo order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/orders",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Demo Student\",\n  \"customerEmail\": \"demo@example.com\",\n  \"shippingAddress\": \"123 Demo Street, Bengaluru 560001\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 1\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Track order",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/orders/track?number={{orderNumber}}&email={{customerEmail}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Operations / Admin APIs",
+      "item": [
+        {
+          "name": "Dashboard stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Admin-Key",
+                "value": "{{adminKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/stats"
+          }
+        },
+        {
+          "name": "All orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Admin-Key",
+                "value": "{{adminKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "Inventory",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Admin-Key",
+                "value": "{{adminKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/products"
+          }
+        },
+        {
+          "name": "Change product stock",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Admin-Key",
+                "value": "{{adminKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/products/1/stock",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stock\": 40\n}"
+            }
+          }
+        },
+        {
+          "name": "Move order to packing",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Admin-Key",
+                "value": "{{adminKey}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/admin/orders/{{orderNumber}}/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"PACKING\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: globalshop
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: globalshop
+          env:
+            - name: SEED_DEMO_DATA
+              value: "true"
+          resources:
+            requests:
+              cpu: 150m
+              memory: 320Mi
+            limits:
+              cpu: 600m
+              memory: 768Mi
