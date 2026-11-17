@@ -1,0 +1,23 @@
+# Optional: demonstrates frontend scaling; baseline remains three pods.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: globalshop-3tier
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: globalshop-frontend
+  template:
+    metadata:
+      labels:
+        app: globalshop-frontend
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: karthikeya91101/globalshop-frontend:3tier-v1
+          ports:
+            - containerPort: 80
+              name: http
