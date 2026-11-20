@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: globalshop-sidecar-config
+  namespace: globalshop
+data:
+  PORT: "8080"
+  DB_URL: "jdbc:h2:file:./data/globalshop;DB_CLOSE_ON_EXIT=FALSE"
+  DB_USER: "sa"
+  SEED_DEMO_DATA: "true"
+  LOGGING_FILE_NAME: "/shared/logs/globalshop.log"
+  LOGGING_LEVEL_COM_GLOBALSHOP: "INFO"
