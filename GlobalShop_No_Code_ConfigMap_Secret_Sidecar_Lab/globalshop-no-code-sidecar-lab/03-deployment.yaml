@@ -1,88 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: globalshop-sidecar-demo
-  namespace: globalshop
+  name: myapp-deployment
 spec:
-  replicas: 1 # LAB: file-based H2 database must not be used for multi-replica production workloads
+  replicas: 1
   selector:
     matchLabels:
-      app: globalshop-sidecar-demo
+      app: myapp
   template:
     metadata:
       labels:
-        app: globalshop-sidecar-demo
+        app: myapp
     spec:
-      securityContext:
-        fsGroup: 2000
-      volumes:
-        - name: shared-logs
-          emptyDir: {}
       containers:
+        # Main Java Application
         - name: java-app
           image: karthikeya91101/myapp:v2
-          imagePullPolicy: IfNotPresent
           ports:
-            - name: http
-              containerPort: 8080
-          envFrom:
-            - configMapRef:
-                name: globalshop-sidecar-config
-            - secretRef:
-                name: globalshop-sidecar-secret
+            - containerPort: 8080
+          env:
+            - name: LOGGING_FILE_NAME
+              value: /shared/app.log
           volumeMounts:
-            - name: shared-logs
-              mountPath: /shared/logs
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: http
-            initialDelaySeconds: 15
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: http
-            initialDelaySeconds: 45
-            periodSeconds: 15
-          resources:
-            requests:
-              cpu: 100m
-              memory: 256Mi
-            limits:
-              cpu: 1000m
-              memory: 768Mi
-        - name: log-processor
+            - name: shared-data
+              mountPath: /shared
+
+        # Sidecar Container
+        - name: log-sidecar
           image: busybox:1.36
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 10001
-            runAsGroup: 2000
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop: ["ALL"]
-          command: ["/bin/sh", "-c"]
-          args:
+          command:
+            - sh
+            - -c
             - |
-              set -eu
-              echo "Sidecar started; watching /shared/logs/globalshop.log"
-              while [ ! -f /shared/logs/globalshop.log ]; do sleep 2; done
-              touch /shared/logs/events.log
-              tail -n +1 -F /shared/logs/globalshop.log | while IFS= read -r line; do
-                case "$line" in
-                  *"Started "*|*" ERROR "*|*" WARN "*|*" DEBUG "*)
-                    printf '%s\n' "$line" >> /shared/logs/events.log
-                    echo "CAPTURED: $line"
-                    ;;
-                esac
-              done
+              touch /shared/app.log
+              tail -n +1 -F /shared/app.log
           volumeMounts:
-            - name: shared-logs
-              mountPath: /shared/logs
-          resources:
-            requests:
-              cpu: 20m
-              memory: 24Mi
-            limits:
-              cpu: 200m
-              memory: 96Mi
+            - name: shared-data
+              mountPath: /shared
+
+      volumes:
+        - name: shared-data
+          emptyDir: {}
