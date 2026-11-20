@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shop-config
+  namespace: shop-demo
+data:
+  DB_URL: "jdbc:postgresql://shop-postgres:5432/globalshop"
+  DB_USER: "globalshop"
+  PORT: "8080"
+  SEED_DEMO_DATA: "true"
+  LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: "INFO"
