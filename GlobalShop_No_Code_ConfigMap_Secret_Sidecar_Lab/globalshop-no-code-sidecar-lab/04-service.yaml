@@ -4,10 +4,11 @@ metadata:
   name: globalshop-sidecar
   namespace: globalshop
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: globalshop-sidecar-demo
   ports:
     - name: http
       port: 80
       targetPort: 8080
+      nodePort: 30080
