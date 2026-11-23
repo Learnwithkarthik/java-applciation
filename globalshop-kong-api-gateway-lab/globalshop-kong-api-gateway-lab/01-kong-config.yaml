@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: globalshop-kong-config
+  namespace: globalshop
+data:
+  kong.yml: |
+    _format_version: "3.0"
+    _transform: true
+
+    # The same existing Spring Boot application serves all endpoints.
+    services:
+      - name: globalshop-backend
+        url: http://globalshop-service.globalshop.svc.cluster.local:8080
+        routes:
+          # Includes /, static assets, and the ordinary public product API.
+          # More specific routes below take precedence.
+          - name: globalshop-public
+            paths:
+              - /
+            strip_path: false
+
+          - name: globalshop-checkout
+            paths:
+              - /api/orders
+            methods:
+              - POST
+            strip_path: false
+
+          - name: globalshop-tracking
+            paths:
+              - /api/orders/track
+            methods:
+              - GET
+            strip_path: false
+
+      # A partner-specific public URL forwarding to the existing catalog API.
+      # NOTE: This is not confidential data; /api/products remains public.
+      - name: globalshop-partner-backend
+        url: http://globalshop-service.globalshop.svc.cluster.local:8080/api/products
+        routes:
+          - name: globalshop-partner-catalog
+            paths:
+              - /partner/products
+            methods:
+              - GET
+            strip_path: true
+
+    consumers:
+      # Dummy teaching credential. Do not use real credentials in ConfigMaps.
+      - username: globalshop-demo-partner
+        keyauth_credentials:
+          - key: demo-key-change-me
+
+    plugins:
+      - name: key-auth
+        route: globalshop-partner-catalog
+        config:
+          key_names:
+            - apikey
+          hide_credentials: true
+
+      - name: rate-limiting
+        route: globalshop-partner-catalog
+        config:
+          minute: 3
+          limit_by: consumer
+          policy: local
+
+      - name: rate-limiting
+        route: globalshop-checkout
+        config:
+          minute: 5
+          limit_by: ip
+          policy: local
+
+      - name: rate-limiting
+        route: globalshop-tracking
+        config:
+          minute: 10
+          limit_by: ip
+          policy: local
